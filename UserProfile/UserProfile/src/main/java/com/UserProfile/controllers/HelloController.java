@@ -18,10 +18,23 @@ public class HelloController {
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM  e6156_project.users"), name);
 	}
 	@RequestMapping("/user/{someID}")
-	public @ResponseBody String getAttr(@PathVariable(value="someID") String id,
-										String someAttr) {
+	public @ResponseBody String getAttr(@PathVariable(value="someID") String id, String someAttr) {
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM e6156_project.users WHERE first_name ='"+id+"'" ), id);
 	}
+
+	@GetMapping("/test")
+	public String basic(@RequestParam(value = "myName", defaultValue = "World") String name) {
+
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM  UserData.users"), name);
+	}
+
+	@RequestMapping("/test/{someID}")
+	public @ResponseBody String getID(@PathVariable(value="someID") String id, String someAttr) {
+
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.users WHERE first_name ='"+id+"'" ), id);
+	}
+
+
 
 
 
@@ -47,6 +60,8 @@ public class HelloController {
 
 				result = ("email: " + rs.getString("email"));
 				result = result + " " + ("User_Name: " + rs.getString("User_Name"));
+				result = result + " " + ("First_Name: " + rs.getString("first_name"));
+				result = result + " " + ("Last_Name: " + rs.getString("last_name"));
 				System.out.println(result);
 			}
 		} catch (SQLException e) {
