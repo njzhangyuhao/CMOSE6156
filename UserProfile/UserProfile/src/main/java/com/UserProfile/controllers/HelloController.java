@@ -22,13 +22,13 @@ public class HelloController {
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM e6156_project.users WHERE first_name ='"+id+"'" ), id);
 	}
 
-	@GetMapping("/test")
+	@GetMapping("/testuser")
 	public String basic(@RequestParam(value = "myName", defaultValue = "World") String name) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM  UserData.users"), name);
 	}
 
-	@RequestMapping("/test/{someID}")
+	@RequestMapping("/testuser/{someID}")
 	public @ResponseBody String getID(@PathVariable(value="someID") String id, String someAttr) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.users WHERE first_name ='"+id+"'" ), id);
@@ -45,7 +45,7 @@ public class HelloController {
 		//String PASS = "dbuserdbuser";
 		//String QUERY = "SELECT * FROM  e6156_project.users";
 		System.out.println(QUERY);
-
+		String finalresult  ="";
 		String result = null;
 		try (
 				Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -55,6 +55,7 @@ public class HelloController {
 
 		) {
 			// Extract data from result set
+
 			while (rs.next()) {
 				// Retrieve by column name
 
@@ -63,11 +64,13 @@ public class HelloController {
 				result = result + " " + ("First_Name: " + rs.getString("first_name"));
 				result = result + " " + ("Last_Name: " + rs.getString("last_name"));
 				System.out.println(result);
+				finalresult=finalresult+result;
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return finalresult;
 	}
 
 }
