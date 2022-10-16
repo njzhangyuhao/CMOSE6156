@@ -13,6 +13,5 @@ import java.util.UUID;
 @Component
 public interface PostDao extends PagingAndSortingRepository<Post, UUID> {
     Optional<Post> findById(UUID id);
-
     List<Post> findAllByIdIn(Iterable<UUID> ids);
 }
