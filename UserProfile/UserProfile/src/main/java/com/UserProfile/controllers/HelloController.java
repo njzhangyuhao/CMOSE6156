@@ -40,10 +40,6 @@ public class HelloController {
 
 	public String mysql_query(String  DB_URL, String USER, String PASS,String QUERY) {
 
-		//String DB_URL = "jdbc:mysql://localhost:3306/e6156_project";
-		//String USER = "root";
-		//String PASS = "dbuserdbuser";
-		//String QUERY = "SELECT * FROM  e6156_project.users";
 		System.out.println(QUERY);
 		String finalresult  ="";
 		String result = null;
