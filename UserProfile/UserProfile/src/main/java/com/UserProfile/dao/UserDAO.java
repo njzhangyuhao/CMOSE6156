@@ -3,18 +3,17 @@ package com.UserProfile.dao;
 import com.UserProfile.model.UserProfile;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.List;
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
-
 @Component
-public interface UserProfileDao extends PagingAndSortingRepository<UserProfile, UUID> {
-    UserProfile findByUserId(UUID userId);
+@Transactional
+public interface UserDAO extends PagingAndSortingRepository<UserProfile,UUID>{
 
     Optional<UserProfile> findById(UUID id);
 
-    List<UserProfile> findAllByIdIn(Iterable<UUID> ids);
+    //UserProfile save(UserProfile userProfile);
 }
