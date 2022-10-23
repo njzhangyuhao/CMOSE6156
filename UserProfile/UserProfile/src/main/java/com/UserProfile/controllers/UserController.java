@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.*;
 import java.util.Map;
+import java.util.UUID;
 
 
 @RestController
@@ -42,25 +43,25 @@ public class UserController {
 	@GetMapping("/testuser")
 	public String basic(@RequestParam(value = "myName", defaultValue = "World") String name) {
 
-		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM  UserData.users"), name);
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM  UserData.user_profile"), name);
 	}
 
 	@RequestMapping("/testuser/{someID}")
 	public @ResponseBody String getname(@PathVariable(value="someID") String id, String someAttr) {
 
-		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.users WHERE first_name ='"+id+"'" ), id);
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE first_name ='"+id+"'" ), id);
 	}
 
 	@RequestMapping("/testid/{someID}")
 	public @ResponseBody String getID(@PathVariable(value="someID") String id, String someAttr) {
 
-		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.users WHERE User_name ='"+id+"'" ), id);
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE User_name ='"+id+"'" ), id);
 	}
 
 	@RequestMapping("/testlast/{someID}")
 	public @ResponseBody String getLast(@PathVariable(value="someID") String id, String someAttr) {
 
-		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.users WHERE last_name ='"+id+"'" ), id);
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE last_name ='"+id+"'" ), id);
 	}
 
 	@Autowired
@@ -69,7 +70,7 @@ public class UserController {
 	public @ResponseBody String index2(@PathVariable (value = "un") String name2, @PathVariable(value = "em") String em2,  @PathVariable(value = "fn") String fn2,  @PathVariable(value = "ln") String ln2,String someAttr){
 		System.out.println(name2);
 
-		jdbc.execute("INSERT INTO UserData.users (User_Name,email,first_name,last_name) VALUES(\"" + name2 + " \",\"" + em2 + "\",\""+fn2 +"\",\""+ln2+"\")");
+		jdbc.execute("INSERT INTO UserData.user_profile (id,User_Name,email,first_name,last_name) VALUES(\""+ UUID.randomUUID() + " \",\"" + name2 + " \",\"" + em2 + "\",\""+fn2 +"\",\""+ln2+"\")");
 		return"data inserted Successfully";
 	}
 
