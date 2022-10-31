@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.*;
-import java.util.Map;
 import java.util.UUID;
+import java.util.Optional;
+
 
 
 @RestController
@@ -23,6 +24,21 @@ public class UserController {
 		dao.save(user);
 		return user;
 	}
+
+	@GetMapping("/v1/post/{postId}")
+	public Optional<UserProfile> getUser(@PathVariable UUID postId) {
+		Optional<UserProfile> post = dao.findById(postId);
+
+		return post;
+	}
+
+	@GetMapping("/v1/post")
+	public Optional<UserProfile> getUser2(@RequestParam UUID postId) {
+		Optional<UserProfile> post = dao.findById(postId);
+
+		return post;
+	}
+
 
 
 	@GetMapping("/")
@@ -52,6 +68,12 @@ public class UserController {
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE first_name ='"+id+"'" ), id);
 	}
 
+	@RequestMapping("/delete/{someID}")
+	public @ResponseBody String getname4(@PathVariable(value="someID") String id, String someAttr) {
+
+		return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","DELETE FROM UserData.user_profile WHERE id ='"+id+"'" ), id);
+	}
+
 	@RequestMapping("/testid/{someID}")
 	public @ResponseBody String getID(@PathVariable(value="someID") String id, String someAttr) {
 
@@ -59,6 +81,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/testlast/{someID}")
+
 	public @ResponseBody String getLast(@PathVariable(value="someID") String id, String someAttr) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE last_name ='"+id+"'" ), id);
@@ -132,6 +155,28 @@ public class UserController {
 				finalresult=finalresult+result;
 
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return finalresult;
+	}
+
+	public String mysql_query2(String  DB_URL, String USER, String PASS,String QUERY) {
+
+		System.out.println(QUERY);
+		String finalresult  ="";
+		String result = null;
+		try {
+				Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				Statement stmt = conn.createStatement();
+				int w = stmt.executeUpdate(QUERY);
+
+
+			// Extract data from result set
+
+			//finalresult= Integer.toString(rs);
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
