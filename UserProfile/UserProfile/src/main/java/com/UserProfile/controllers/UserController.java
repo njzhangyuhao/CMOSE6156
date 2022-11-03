@@ -33,11 +33,21 @@ public class UserController {
 	}
 
 	@GetMapping("/v1/post")
-	public Optional<UserProfile> getUser2(@RequestParam UUID postId) {
-		Optional<UserProfile> post = dao.findById(postId);
+	public Optional<UserProfile> getUser2(@RequestParam UUID userId) {
+		Optional<UserProfile> post = dao.findById(userId);
 
 		return post;
 	}
+
+	@GetMapping("/update")
+	public Optional<UserProfile> upUser(@RequestParam UUID userId,@RequestParam String fname) {
+		Optional<UserProfile> post = dao.findById(userId);
+		System.out.println(fname);
+		post.ifPresent(posts->posts.setFirstName(fname));
+		post.ifPresent(posts->dao.save(posts));
+		return post;
+	}
+
 
 
 
