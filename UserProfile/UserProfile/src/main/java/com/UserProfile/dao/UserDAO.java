@@ -24,7 +24,7 @@ public interface UserDAO extends PagingAndSortingRepository<UserProfile,UUID>,Jp
 
     UserProfile save(UserProfile userProfile);
 
-    Page<UserProfile> findAll(Pageable pageable);
+   // Page<UserProfile> findAll(Pageable pageable);
 
 
 }

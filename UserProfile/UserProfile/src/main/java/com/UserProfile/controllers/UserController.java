@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.persistence.ManyToMany;
 import java.sql.*;
 import java.util.UUID;
 import java.util.Optional;
@@ -49,13 +50,14 @@ public class UserController {
 		return post;
 	}
 
+	//implement pagination in a return all users
 	@GetMapping("/paging")
-	public String pagin(){
+	public String paginationUsers(){
 		//System.out.println(ln);
 		Pageable pageable = PageRequest.of(1,1);
 		System.out.println(pageable);
 
-		Page<UserProfile>p1 = dao.findAll(pageable);
+		Page<UserProfile> p1 = dao.findAll(pageable);
 
 		//List<UserProfile> allLast = p1.getContent();
 		return "ok";
@@ -112,32 +114,36 @@ public class UserController {
 
 
 
-
+	//return by firstname
 	@RequestMapping("/testuser/{someID}")
-	public @ResponseBody String getname(@PathVariable(value="someID") String id, String someAttr) {
+	public @ResponseBody String getname(@PathVariable(value="someID") String id) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE first_name ='"+id+"'" ), id);
 	}
 
+	//Delete by ID
 	@RequestMapping("/delete/{someID}")
-	public @ResponseBody String getname4(@PathVariable(value="someID") String id, String someAttr) {
+	public @ResponseBody String getname4(@PathVariable(value="someID") String id) {
 
 		return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","DELETE FROM UserData.user_profile WHERE id ='"+id+"'" ), id);
 	}
 
+	//search by username
 	@RequestMapping("/testid/{someID}")
 	public @ResponseBody String getID(@PathVariable(value="someID") String id, String someAttr) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE User_name ='"+id+"'" ), id);
 	}
 
+	//query by lastname
 	@RequestMapping("/testlast/{someID}")
 
-	public @ResponseBody String getLast(@PathVariable(value="someID") String id, String someAttr) {
+	public @ResponseBody String getLast(@PathVariable(value="someID") String id) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE last_name ='"+id+"'" ), id);
 	}
 
+	//create user by path variables
 	@Autowired
 	JdbcTemplate jdbc;
 	@RequestMapping("/insert/{un}/{em}/{fn}/{ln}")
