@@ -56,6 +56,7 @@ public class UserProfile {
 
     //public String findUserByFirstName(String name){ return name;}
 
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -67,6 +68,8 @@ public class UserProfile {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getLastName(){return lastName;}
 
 
 }

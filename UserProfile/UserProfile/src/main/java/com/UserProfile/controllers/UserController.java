@@ -1,6 +1,11 @@
 package com.UserProfile.controllers;
+
 import com.UserProfile.dao.UserDAO;
 import com.UserProfile.model.UserProfile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,35 +15,54 @@ import java.util.UUID;
 import java.util.Optional;
 
 
-
 @RestController
 public class UserController {
 	private final UserDAO dao;
+	private final int limit =2;
+
 
 	public UserController (UserDAO dao){
 		this.dao=dao;
+
 	}
 
+	//adds a user from JSON input
 	@PostMapping("/newuser")
 	public UserProfile addUserProfile(@RequestBody UserProfile user) {
 		dao.save(user);
 		return user;
 	}
 
-	@GetMapping("/v1/post/{postId}")
-	public Optional<UserProfile> getUser(@PathVariable UUID postId) {
-		Optional<UserProfile> post = dao.findById(postId);
+	//returns a user with specific ID using path
+	@GetMapping("/userID/{userId}")
+	public Optional<UserProfile> getUser(@PathVariable UUID userId) {
+		Optional<UserProfile> uid = dao.findById(userId);
 
-		return post;
+		return uid;
 	}
 
-	@GetMapping("/v1/post")
+	//returns a user by id using query params
+	@GetMapping("/userbyid")
 	public Optional<UserProfile> getUser2(@RequestParam UUID userId) {
 		Optional<UserProfile> post = dao.findById(userId);
 
 		return post;
 	}
 
+	@GetMapping("/paging")
+	public String pagin(){
+		//System.out.println(ln);
+		Pageable pageable = PageRequest.of(1,1);
+		System.out.println(pageable);
+
+		Page<UserProfile>p1 = dao.findAll(pageable);
+
+		//List<UserProfile> allLast = p1.getContent();
+		return "ok";
+	}
+
+
+	//updates a users name given an id
 	@GetMapping("/update")
 	public Optional<UserProfile> upUser(@RequestParam UUID userId,@RequestParam String fname) {
 		Optional<UserProfile> post = dao.findById(userId);
@@ -50,27 +74,44 @@ public class UserController {
 
 
 
-
+	//general response
 	@GetMapping("/")
 	public String index() {
 		return "Greetings from Spring Boot!";
 	}
 
+	//local method for testing
 	@GetMapping("/user")
 	public String sayHell(@RequestParam(value = "myName", defaultValue = "World") String name) {
 
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM  e6156_project.users"), name);
 	}
+
+	//local method for testing
 	@RequestMapping("/user/{someID}")
 	public @ResponseBody String getAttr(@PathVariable(value="someID") String id, String someAttr) {
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM e6156_project.users WHERE first_name ='"+id+"'" ), id);
 	}
 
-	@GetMapping("/testuser")
-	public String basic(@RequestParam(value = "myName", defaultValue = "World") String name) {
+	//return all users with optional limit
 
-		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM  UserData.user_profile"), name);
+	@GetMapping("/testuser")
+	public String basic(@RequestParam (required = false) String limits) {
+
+		if (limits == null || Integer.parseInt(limits) > limit){
+
+			limits=Integer.toString(limit);
+		}
+		int pageNumber = 0;
+		int offset = (Integer.parseInt(limits) * pageNumber) - Integer.parseInt(limits);
+		System.out.println(offset);
+
+
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM  UserData.user_profile Limit " + limits ), limits);
 	}
+
+
+
 
 	@RequestMapping("/testuser/{someID}")
 	public @ResponseBody String getname(@PathVariable(value="someID") String id, String someAttr) {
@@ -106,38 +147,6 @@ public class UserController {
 		jdbc.execute("INSERT INTO UserData.user_profile (id,User_Name,email,first_name,last_name) VALUES(\""+ UUID.randomUUID() + " \",\"" + name2 + " \",\"" + em2 + "\",\""+fn2 +"\",\""+ln2+"\")");
 		return"data inserted Successfully";
 	}
-
-
-
-
-	/*
-
-	@Autowired
-	private UserDao dao;
-	@PostMapping("/newUser")
-	public Optional<UserProfile> saveUser(@RequestParam UserProfile user){
-
-		return dao.saveUser(user);
-	}**/
-/*
-
-	private final UserDao dao;
-	@Autowired
-	public UserController(UserDao dao) {
-		this.dao = dao;
-	}
-
-	@GetMapping("/findByEmail/{email}")
-	public Optional<UserProfile> getUserByEmail(@PathVariable String email) {
-		return UserDao.findByEmail(email);
-	}
-**/
-
-
-
-
-
-
 
 
 	public String mysql_query(String  DB_URL, String USER, String PASS,String QUERY) {
