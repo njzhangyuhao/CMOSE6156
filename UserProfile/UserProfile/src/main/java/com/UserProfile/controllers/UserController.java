@@ -55,7 +55,7 @@ public class UserController {
 	public String paginationUsers(){
 		//System.out.println(ln);
 		Pageable pageable = PageRequest.of(1,1);
-		System.out.println(pageable);
+		//System.out.println(pageable);
 
 		Page<UserProfile> p1 = dao.findAll(pageable);
 
