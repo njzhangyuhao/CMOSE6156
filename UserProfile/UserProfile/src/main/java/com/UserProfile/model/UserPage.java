@@ -18,7 +18,8 @@ public class UserPage {
     }
 
     public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
+        if(pageSize<this.pageSize)
+            this.pageSize = pageSize;
     }
 
     private int pageSize = 10;

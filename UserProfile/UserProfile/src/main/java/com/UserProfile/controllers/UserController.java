@@ -55,11 +55,10 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping("/paging")
-	public ResponseEntity<Page<UserProfile>>paginationUsers(UserPage userPage){
-		//Pageable pageable = PageRequest.of(1,1);
-		//Page<UserProfile> p1 = dao.findAll(pageable);
-
-		//List<UserProfile> allLast = p1.getContent();
+	public ResponseEntity<Page<UserProfile>>paginationUsers(UserPage userPage,@RequestParam (required = false) String limits){
+		if(limits!=null ){
+			userPage.setPageSize(Integer.parseInt(limits));
+		}
 		return new ResponseEntity<>(userService.getUsers(userPage), HttpStatus.OK);
 	}
 
