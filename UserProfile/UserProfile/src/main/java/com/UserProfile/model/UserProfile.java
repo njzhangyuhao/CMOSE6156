@@ -29,10 +29,6 @@ public class UserProfile {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
 
     public String getFirstName(UserProfile user) {
         return user.firstName;
@@ -47,15 +43,6 @@ public class UserProfile {
     public UserProfile() {
 
     }
-    public void addUser(UserProfile user){
-       System.out.println("adding") ;
-    }
-
-
-
-
-    //public String findUserByFirstName(String name){ return name;}
-
 
     public void setUserName(String userName) {
         this.userName = userName;

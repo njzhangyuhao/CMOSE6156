@@ -16,7 +16,7 @@ import java.util.UUID;
 import java.util.List;
 @Component
 @Transactional
-public interface UserDAO extends PagingAndSortingRepository<UserProfile,UUID>,JpaRepository<UserProfile,UUID>{
+public interface UserDAO extends PagingAndSortingRepository<UserProfile,UUID>{
 
 
 

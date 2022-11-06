@@ -1,16 +1,16 @@
 package com.UserProfile.controllers;
 
 import com.UserProfile.dao.UserDAO;
+import com.UserProfile.model.UserPage;
 import com.UserProfile.model.UserProfile;
+import com.UserProfile.service.UserService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.persistence.ManyToMany;
 import java.sql.*;
 import java.util.UUID;
 import java.util.Optional;
@@ -22,9 +22,10 @@ public class UserController {
 	private final int limit =2;
 
 
-	public UserController (UserDAO dao){
+	public UserController (UserDAO dao, UserService userService){
 		this.dao=dao;
 
+		this.userService = userService;
 	}
 
 	//adds a user from JSON input
@@ -51,16 +52,15 @@ public class UserController {
 	}
 
 	//implement pagination in a return all users
-	@GetMapping("/paging")
-	public String paginationUsers(){
-		//System.out.println(ln);
-		Pageable pageable = PageRequest.of(1,1);
-		//System.out.println(pageable);
+	private final UserService userService;
 
-		Page<UserProfile> p1 = dao.findAll(pageable);
+	@GetMapping("/paging")
+	public ResponseEntity<Page<UserProfile>>paginationUsers(UserPage userPage){
+		//Pageable pageable = PageRequest.of(1,1);
+		//Page<UserProfile> p1 = dao.findAll(pageable);
 
 		//List<UserProfile> allLast = p1.getContent();
-		return "ok";
+		return new ResponseEntity<>(userService.getUsers(userPage), HttpStatus.OK);
 	}
 
 
@@ -150,7 +150,7 @@ public class UserController {
 	public @ResponseBody String index2(@PathVariable (value = "un") String name2, @PathVariable(value = "em") String em2,  @PathVariable(value = "fn") String fn2,  @PathVariable(value = "ln") String ln2,String someAttr){
 		System.out.println(name2);
 
-		jdbc.execute("INSERT INTO UserData.user_profile (id,User_Name,email,first_name,last_name) VALUES(\""+ UUID.randomUUID() + " \",\"" + name2 + " \",\"" + em2 + "\",\""+fn2 +"\",\""+ln2+"\")");
+		jdbc.execute("INSERT INTO UserData.user_profile (id,User_Name,email,first_name,last_name) VALUES(\""+ UUID.randomUUID() + "\",\"" + name2 + " \",\"" + em2 + "\",\""+fn2 +"\",\""+ln2+"\")");
 		return"data inserted Successfully";
 	}
 
