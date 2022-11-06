@@ -55,9 +55,12 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping("/paging")
-	public ResponseEntity<Page<UserProfile>>paginationUsers(UserPage userPage,@RequestParam (required = false) String limits){
+	public ResponseEntity<Page<UserProfile>>paginationUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
 		if(limits!=null ){
 			userPage.setPageSize(Integer.parseInt(limits));
+		}
+		if(offset!=null ){
+			userPage.setPageNumber(Integer.parseInt(offset));
 		}
 		return new ResponseEntity<>(userService.getUsers(userPage), HttpStatus.OK);
 	}
