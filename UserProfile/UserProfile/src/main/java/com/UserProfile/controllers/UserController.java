@@ -1,15 +1,16 @@
 package com.UserProfile.controllers;
-
 import com.UserProfile.dao.UserDAO;
 import com.UserProfile.model.UserPage;
 import com.UserProfile.model.UserProfile;
 import com.UserProfile.service.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.hateoas.server.mvc.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.hateoas.*;
 
 import java.sql.*;
 import java.util.UUID;
@@ -28,24 +29,41 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	//adds a user from JSON input
+	//adds a user from JSON input and adds a self referencing Link for Hateoas
 	@PostMapping("/newuser")
 	public UserProfile addUserProfile(@RequestBody UserProfile user) {
 		dao.save(user);
+		String self = "/userID/"+user.getId();
+		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
+		user.add(link);
 		return user;
 	}
 
-	//returns a user with specific ID using path
+	//returns a user with specific ID using path params
 	@GetMapping("/userID/{userId}")
 	public Optional<UserProfile> getUser(@PathVariable UUID userId) {
+		String self = "/userID/"+userId;
+		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
 		Optional<UserProfile> uid = dao.findById(userId);
-
+		dao.findById(userId).ifPresent(user->user.add(link));
+		System.out.println(uid);
+		System.out.println(uid.getClass());
 		return uid;
 	}
 
 	//returns a user by id using query params
 	@GetMapping("/userbyid")
 	public Optional<UserProfile> getUser2(@RequestParam UUID userId) {
+		Optional<UserProfile> post = dao.findById(userId);
+		String self = "/userID/"+userId;
+		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
+		dao.findById(userId).ifPresent(user->user.add(link));
+		return post;
+	}
+
+	//method to manage multiple query params WIP
+	@GetMapping("/userBy")
+	public Optional<UserProfile> getUser4(@RequestParam(required = false) UUID userId,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String email) {
 		Optional<UserProfile> post = dao.findById(userId);
 
 		return post;
@@ -65,14 +83,52 @@ public class UserController {
 		return new ResponseEntity<>(userService.getUsers(userPage), HttpStatus.OK);
 	}
 
+	// Add links
+	@GetMapping("/hateoas")
+	public ResponseEntity<Page<UserProfile>>hateoasUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
+		if(limits!=null ){
+			userPage.setPageSize(Integer.parseInt(limits));
+		}
+		if(offset!=null ){
+			userPage.setPageNumber(Integer.parseInt(offset));
+		}
+		if(limits == null){
+			limits =Integer.toString(userPage.getPageSize());
+		}
+		int pageN = userPage.getPageNumber() +1;
+		String next = "hateoas?limits="+limits+"&offset="+pageN;
+		String self = "hateoas?limits="+limits+"&offset="+userPage.getPageNumber();
+		String prev = "hateoas?limits="+limits+"&offset="+(userPage.getPageNumber()-1);
+		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(next).withRel("NEXT");
+		Link link2 = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
+		Link link3 = WebMvcLinkBuilder.linkTo(UserController.class).slash(prev).withRel("PREV");
+		userPage.add(link);
+
+
+		System.out.println(link);
+		System.out.println(link2);
+		System.out.println(link3);
+
+
+
+		return new ResponseEntity<>(userService.getUsers(userPage) , HttpStatus.OK);
+	}
+
+
+
+
 
 	//updates a users name given an id
+	//TODO - expand to all params excluding UUID
 	@GetMapping("/update")
 	public Optional<UserProfile> upUser(@RequestParam UUID userId,@RequestParam String fname) {
 		Optional<UserProfile> post = dao.findById(userId);
 		System.out.println(fname);
 		post.ifPresent(posts->posts.setFirstName(fname));
 		post.ifPresent(posts->dao.save(posts));
+		String self = "/userID/"+userId;
+		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
+		dao.findById(userId).ifPresent(user->user.add(link));
 		return post;
 	}
 
@@ -97,7 +153,7 @@ public class UserController {
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM e6156_project.users WHERE first_name ='"+id+"'" ), id);
 	}
 
-	//return all users with optional limit
+	//return all users with optional limit by request param
 
 	@GetMapping("/testuser")
 	public String basic(@RequestParam (required = false) String limits) {
@@ -117,11 +173,12 @@ public class UserController {
 
 
 	//return by firstname
-	@RequestMapping("/testuser/{someID}")
+	@RequestMapping("/userfirstname/{someID}")
 	public @ResponseBody String getname(@PathVariable(value="someID") String id) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE first_name ='"+id+"'" ), id);
 	}
+
 
 	//Delete by ID
 	@RequestMapping("/delete/{someID}")
@@ -131,14 +188,14 @@ public class UserController {
 	}
 
 	//search by username
-	@RequestMapping("/testid/{someID}")
+	@RequestMapping("/userid/{someID}")
 	public @ResponseBody String getID(@PathVariable(value="someID") String id, String someAttr) {
 
 		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE User_name ='"+id+"'" ), id);
 	}
 
 	//query by lastname
-	@RequestMapping("/testlast/{someID}")
+	@RequestMapping("/userlastname/{someID}")
 
 	public @ResponseBody String getLast(@PathVariable(value="someID") String id) {
 
@@ -149,10 +206,11 @@ public class UserController {
 	@Autowired
 	JdbcTemplate jdbc;
 	@RequestMapping("/insert/{un}/{em}/{fn}/{ln}")
-	public @ResponseBody String index2(@PathVariable (value = "un") String name2, @PathVariable(value = "em") String em2,  @PathVariable(value = "fn") String fn2,  @PathVariable(value = "ln") String ln2,String someAttr){
+	public @ResponseBody String index2(@PathVariable (value = "un") String name2, @PathVariable(value = "em") String em2,  @PathVariable(value = "fn") String fn2,  @PathVariable(value = "ln") String ln2){
 		System.out.println(name2);
 
 		jdbc.execute("INSERT INTO UserData.user_profile (id,User_Name,email,first_name,last_name) VALUES(\""+ UUID.randomUUID() + "\",\"" + name2 + " \",\"" + em2 + "\",\""+fn2 +"\",\""+ln2+"\")");
+
 		return"data inserted Successfully";
 	}
 

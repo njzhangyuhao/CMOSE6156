@@ -1,8 +1,10 @@
 package com.UserProfile.model;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.*;
 
-public class UserPage {
+
+public class UserPage extends RepresentationModel<UserPage>{
     private int pageNumber =0;
 
     public int getPageNumber() {

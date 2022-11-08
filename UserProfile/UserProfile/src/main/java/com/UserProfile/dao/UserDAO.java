@@ -20,7 +20,7 @@ public interface UserDAO extends PagingAndSortingRepository<UserProfile,UUID>{
 
 
 
-    Optional<UserProfile> findById(UUID id);
+   Optional<UserProfile> findById(UUID id);
 
     UserProfile save(UserProfile userProfile);
 

@@ -7,12 +7,13 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
+import org.springframework.hateoas.*;
 
 
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserProfile {
+public class UserProfile extends RepresentationModel<UserProfile>{
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
