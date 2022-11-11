@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.hateoas.*;
 
+import javax.persistence.criteria.*;
 import java.sql.*;
-import java.util.UUID;
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
@@ -34,7 +34,7 @@ public class UserController {
 	public UserProfile addUserProfile(@RequestBody UserProfile user) {
 		dao.save(user);
 		String self = "/userID/"+user.getId();
-		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
+		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("self");
 		user.add(link);
 		return user;
 	}
@@ -56,17 +56,70 @@ public class UserController {
 	public Optional<UserProfile> getUser2(@RequestParam UUID userId) {
 		Optional<UserProfile> post = dao.findById(userId);
 		String self = "/userID/"+userId;
-		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
+		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("self");
 		dao.findById(userId).ifPresent(user->user.add(link));
 		return post;
 	}
 
 	//method to manage multiple query params WIP
 	@GetMapping("/userBy")
-	public Optional<UserProfile> getUser4(@RequestParam(required = false) UUID userId,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String email) {
-		Optional<UserProfile> post = dao.findById(userId);
+	public List<Optional<UserProfile>> getUser4(@RequestParam(required = false) String uname,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String email,@RequestParam(required = false) String offset,@RequestParam(required = false) String limit) {
 
-		return post;
+		String base = "SELECT * FROM UserData.user_profile ";
+		String where2  ="WHERE ";
+
+
+		if(fname != null){
+			 where2 = where2 + "first_name = "+ "'" + fname + "'";
+
+		}
+		if(lname !=null){
+			if(where2.contains("first_name"))
+			{
+				where2=where2 +" AND ";
+			}
+			where2 = where2 + "last_name = "+ "'" +lname+ "'" ;
+		}
+		if(email !=null){
+			if(where2.contains("first_name") || where2.contains("last_name"))
+			{
+				where2=where2 +" AND ";
+			}
+			where2 = where2 + "email = "+"'" + email+ "'" ;
+		}
+		if(uname !=null){
+			if(where2.contains("first_name") || where2.contains("last_name") || where2.contains("email"))
+			{
+				where2=where2 +" AND ";
+			}
+			where2 = where2 + "user_name = "+ "'" + uname+ "'" ;
+		}
+
+		if (where2 != "WHERE "){
+			base = base + where2;
+
+		}
+
+		if(limit!= null && Integer.parseInt(limit)<10){
+
+				base = base + " LIMIT " + limit;
+
+		}
+		else{
+			base = base + " LIMIT " + 10;
+		}
+		if(offset!= null ){
+			base = base + " OFFSET "+ offset;
+		}
+		List<Optional<UserProfile>> userReturn = mysql_query3("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser",base);
+
+
+
+
+		System.out.println(base);
+		Optional<List<UserProfile>> post = dao.findByFirstName(fname);
+
+		return userReturn;
 	}
 
 	//implement pagination in a return all users
@@ -139,7 +192,7 @@ public class UserController {
 	public String index() {
 		return "Greetings from Spring Boot!";
 	}
-
+/*
 	//local method for testing
 	@GetMapping("/user")
 	public String sayHell(@RequestParam(value = "myName", defaultValue = "World") String name) {
@@ -151,7 +204,7 @@ public class UserController {
 	@RequestMapping("/user/{someID}")
 	public @ResponseBody String getAttr(@PathVariable(value="someID") String id, String someAttr) {
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM e6156_project.users WHERE first_name ='"+id+"'" ), id);
-	}
+	}**/
 
 	//return all users with optional limit by request param
 
@@ -174,9 +227,9 @@ public class UserController {
 
 	//return by firstname
 	@RequestMapping("/userfirstname/{someID}")
-	public @ResponseBody String getname(@PathVariable(value="someID") String id) {
+	public ResponseEntity<String> getname(@PathVariable(value="someID") String id) {
 
-		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE first_name ='"+id+"'" ), id);
+		return new ResponseEntity<String>(String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM UserData.user_profile WHERE first_name ='"+id+"'" ), id),HttpStatus.OK);
 	}
 
 
@@ -267,5 +320,41 @@ public class UserController {
 		}
 		return finalresult;
 	}
+
+	public List<Optional<UserProfile>> mysql_query3(String  DB_URL, String USER, String PASS,String QUERY) {
+
+		System.out.println(QUERY);
+		String finalresult  ="";
+		List<Optional<UserProfile>> allUsers= new ArrayList<Optional<UserProfile>>();
+		try (
+				Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(QUERY);
+
+
+		) {
+			// Extract data from result set
+
+			while (rs.next()) {
+				// Retrieve by column name
+				//System.out.println(rs.getString("id"));
+				//UserProfile temp = new UserProfile(rs.getString("id"),rs.getString("User_Name"),rs.getString("email"), rs.getString("first_name"), rs.getString("last_name"));
+				UUID tempID= UUID.fromString(rs.getString("id"));
+				Optional<UserProfile> thisUser = dao.findById(tempID);
+				String self = "/userID/"+rs.getString("id");
+				Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
+				dao.findById(tempID).ifPresent(user->user.add(link));
+
+				//System.out.println(thisUser.ifPresent(););
+				allUsers.add(thisUser);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allUsers;
+	}
+
+
 
 }

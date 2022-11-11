@@ -21,11 +21,17 @@ public interface UserDAO extends PagingAndSortingRepository<UserProfile,UUID>{
 
 
    Optional<UserProfile> findById(UUID id);
+    Optional<List<UserProfile>> findByFirstName(String firstName);
+    Optional<UserProfile> findByLastName(String lastName);
+    Optional<UserProfile> findByUserName(String userName);
+    Optional<UserProfile> findByEmail(String email);
 
     UserProfile save(UserProfile userProfile);
 
 
     Page<UserProfile> findAll ( Pageable pageable);
+
+
 
 
 }
