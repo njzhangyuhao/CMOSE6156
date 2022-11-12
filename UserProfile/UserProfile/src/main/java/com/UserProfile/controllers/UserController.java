@@ -4,9 +4,9 @@ import com.UserProfile.model.UserPage;
 import com.UserProfile.model.UserProfile;
 import com.UserProfile.service.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.web.*;
 import org.springframework.hateoas.server.mvc.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -113,9 +113,6 @@ public class UserController {
 		}
 		List<Optional<UserProfile>> userReturn = mysql_query3("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser",base);
 
-
-
-
 		System.out.println(base);
 		Optional<List<UserProfile>> post = dao.findByFirstName(fname);
 
@@ -137,8 +134,9 @@ public class UserController {
 	}
 
 	// Add links
+
 	@GetMapping("/hateoas")
-	public ResponseEntity<Page<UserProfile>>hateoasUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
+	public ResponseEntity<PagedModel<EntityModel<UserProfile>>>hateoasUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
 		if(limits!=null ){
 			userPage.setPageSize(Integer.parseInt(limits));
 		}
@@ -162,9 +160,22 @@ public class UserController {
 		System.out.println(link2);
 		System.out.println(link3);
 
+		Page<UserProfile> page1 = userService.getUsers(userPage);
 
 
-		return new ResponseEntity<>(userService.getUsers(userPage) , HttpStatus.OK);
+		for(UserProfile x: page1){
+			String userMethod ="userbyid?userId="+x.getId();
+			x.add(WebMvcLinkBuilder.linkTo(UserController.class).slash(userMethod).withRel("SELF"));
+		}
+
+		PagedResourcesAssembler<UserProfile> pagedResourcesAssembler = new PagedResourcesAssembler<UserProfile>(null,null);
+		PagedModel<EntityModel<UserProfile>> coll = pagedResourcesAssembler.toModel(page1,link);
+		System.out.println(coll);
+
+
+
+	//	userService.getUsers(userPage)
+		return new ResponseEntity<>(coll , HttpStatus.OK);
 	}
 
 
