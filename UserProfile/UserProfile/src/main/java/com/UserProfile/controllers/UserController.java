@@ -60,7 +60,7 @@ public class UserController {
 		dao.findById(userId).ifPresent(user->user.add(link));
 		return post;
 	}
-
+/*
 	//method to manage multiple query params WIP
 	@GetMapping("/userBy")
 	public List<Optional<UserProfile>> getUser4(@RequestParam(required = false) String uname,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String email,@RequestParam(required = false) String offset,@RequestParam(required = false) String limit) {
@@ -117,25 +117,14 @@ public class UserController {
 		Optional<List<UserProfile>> post = dao.findByFirstName(fname);
 
 		return userReturn;
-	}
+	}**/
 
 	//implement pagination in a return all users
 	private final UserService userService;
 
-	@GetMapping("/paging")
-	public ResponseEntity<Page<UserProfile>>paginationUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
-		if(limits!=null ){
-			userPage.setPageSize(Integer.parseInt(limits));
-		}
-		if(offset!=null ){
-			userPage.setPageNumber(Integer.parseInt(offset));
-		}
-		return new ResponseEntity<>(userService.getUsers(userPage), HttpStatus.OK);
-	}
-
 	// Add links
 
-	@GetMapping("/hateoas")
+	@GetMapping("/usersBy")
 	public ResponseEntity<PagedModel<EntityModel<UserProfile>>>hateoasUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
 		if(limits!=null ){
 			userPage.setPageSize(Integer.parseInt(limits));
@@ -196,14 +185,19 @@ public class UserController {
 		return post;
 	}
 
+	//Delete by ID
+	@RequestMapping("/delete/{someID}")
+	public @ResponseBody String getname4(@PathVariable(value="someID") String id) {
 
-
+		return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","DELETE FROM UserData.user_profile WHERE id ='"+id+"'" ), id);
+	}
+/*
 	//general response
 	@GetMapping("/")
 	public String index() {
 		return "Greetings from Spring Boot!";
 	}
-/*
+
 	//local method for testing
 	@GetMapping("/user")
 	public String sayHell(@RequestParam(value = "myName", defaultValue = "World") String name) {
@@ -215,25 +209,9 @@ public class UserController {
 	@RequestMapping("/user/{someID}")
 	public @ResponseBody String getAttr(@PathVariable(value="someID") String id, String someAttr) {
 		return String.format(mysql_query("jdbc:mysql://localhost:3306/e6156_project","root","dbuserdbuser","SELECT * FROM e6156_project.users WHERE first_name ='"+id+"'" ), id);
-	}**/
-
-	//return all users with optional limit by request param
-
-	@GetMapping("/testuser")
-	public String basic(@RequestParam (required = false) String limits) {
-
-		if (limits == null || Integer.parseInt(limits) > limit){
-
-			limits=Integer.toString(limit);
-		}
-		int pageNumber = 0;
-		int offset = (Integer.parseInt(limits) * pageNumber) - Integer.parseInt(limits);
-		System.out.println(offset);
-
-
-		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT * FROM  UserData.user_profile Limit " + limits ), limits);
 	}
 
+	//return all users with optional limit by request param
 
 
 	//return by firstname
@@ -244,12 +222,7 @@ public class UserController {
 	}
 
 
-	//Delete by ID
-	@RequestMapping("/delete/{someID}")
-	public @ResponseBody String getname4(@PathVariable(value="someID") String id) {
 
-		return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","DELETE FROM UserData.user_profile WHERE id ='"+id+"'" ), id);
-	}
 
 	//search by username
 	@RequestMapping("/userid/{someID}")
@@ -276,7 +249,7 @@ public class UserController {
 		jdbc.execute("INSERT INTO UserData.user_profile (id,User_Name,email,first_name,last_name) VALUES(\""+ UUID.randomUUID() + "\",\"" + name2 + " \",\"" + em2 + "\",\""+fn2 +"\",\""+ln2+"\")");
 
 		return"data inserted Successfully";
-	}
+	}**/
 
 
 	public String mysql_query(String  DB_URL, String USER, String PASS,String QUERY) {
