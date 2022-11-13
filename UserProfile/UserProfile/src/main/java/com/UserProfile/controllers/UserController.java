@@ -173,12 +173,32 @@ public class UserController {
 
 	//updates a users name given an id
 	//TODO - expand to all params excluding UUID
-	@GetMapping("/update")
-	public Optional<UserProfile> upUser(@RequestParam UUID userId,@RequestParam String fname) {
+	@PutMapping("/update")
+	public Optional<UserProfile> upUser(@RequestParam UUID userId,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String uname,@RequestParam(required = false) String email) {
 		Optional<UserProfile> post = dao.findById(userId);
-		System.out.println(fname);
-		post.ifPresent(posts->posts.setFirstName(fname));
-		post.ifPresent(posts->dao.save(posts));
+
+		if(fname!=null) {
+			post.ifPresent(posts -> posts.setFirstName(fname));
+			post.ifPresent(posts -> dao.save(posts));
+		}
+		if(lname!=null) {
+			post.ifPresent(posts -> posts.setLastName(lname));
+			post.ifPresent(posts -> dao.save(posts));
+		}
+
+		if(uname!=null) {
+			post.ifPresent(posts -> posts.setUserName(uname));
+			post.ifPresent(posts -> dao.save(posts));
+		}
+
+		if(email!=null) {
+			post.ifPresent(posts -> posts.setEmail(email));
+			post.ifPresent(posts -> dao.save(posts));
+		}
+
+
+
+
 		String self = "/userID/"+userId;
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
 		dao.findById(userId).ifPresent(user->user.add(link));
@@ -186,7 +206,7 @@ public class UserController {
 	}
 
 	//Delete by ID
-	@RequestMapping("/delete/{someID}")
+	@DeleteMapping ("/delete/{someID}")
 	public @ResponseBody String getname4(@PathVariable(value="someID") String id) {
 
 		return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","DELETE FROM UserData.user_profile WHERE id ='"+id+"'" ), id);
@@ -251,7 +271,7 @@ public class UserController {
 		return"data inserted Successfully";
 	}**/
 
-
+/*
 	public String mysql_query(String  DB_URL, String USER, String PASS,String QUERY) {
 
 		System.out.println(QUERY);
@@ -281,7 +301,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return finalresult;
-	}
+	}**/
 
 	public String mysql_query2(String  DB_URL, String USER, String PASS,String QUERY) {
 
@@ -304,7 +324,7 @@ public class UserController {
 		}
 		return finalresult;
 	}
-
+/*
 	public List<Optional<UserProfile>> mysql_query3(String  DB_URL, String USER, String PASS,String QUERY) {
 
 		System.out.println(QUERY);
@@ -340,5 +360,5 @@ public class UserController {
 	}
 
 
-
+**/
 }
