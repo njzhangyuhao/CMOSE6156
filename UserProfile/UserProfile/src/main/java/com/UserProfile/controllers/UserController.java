@@ -7,6 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.web.*;
 import org.springframework.hateoas.server.mvc.*;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.*;
+import org.springframework.security.oauth2.client.*;
+import org.springframework.security.oauth2.client.annotation.*;
+import org.springframework.security.oauth2.core.user.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +36,17 @@ public class UserController {
 		this.userService = userService;
 	}
 	@RequestMapping("/")
-	@ResponseBody
 	public String index() {
-		return "You made it!";
+		return "index";
+	}
+	@RequestMapping("/securedPage")
+	public String securedPage(Model model,
+							  @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
+							  @AuthenticationPrincipal OAuth2User oauth2User) {
+		model.addAttribute("userName", oauth2User.getName());
+		model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
+		model.addAttribute("userAttributes", oauth2User.getAttributes());
+		return "securedPage";
 	}
 
 	// Login form
