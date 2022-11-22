@@ -5,7 +5,7 @@
       <target name="ec2-user@ec2-54-204-67-22.compute-1.amazonaws.com:22" type="ssh/sftp" uuid="558753c0-1d46-43d8-8f7e-8d06ecb52ae1">
         <config>
           <option name="projectRootOnTarget" value="/home/ec2-user/UserProfile" />
-          <option name="serverName" value="ec2-user@ec2-54-204-67-22.compute-1.amazonaws.com:22 key" />
+          <option name="serverName" value="ec2-user@ec2-52-91-86-21.compute-1.amazonaws.com:22 key" />
         </config>
         <ContributedStateBase type="JavaLanguageRuntime">
           <config>

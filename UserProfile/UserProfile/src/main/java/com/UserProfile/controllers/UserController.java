@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.web.*;
 import org.springframework.hateoas.server.mvc.*;
 import org.springframework.http.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,7 +19,8 @@ import java.sql.*;
 import java.util.*;
 
 
-@RestController
+//@RestController
+@Controller
 public class UserController {
 	private final UserDAO dao;
 	private final int limit =2;
@@ -28,9 +31,28 @@ public class UserController {
 
 		this.userService = userService;
 	}
+	@RequestMapping("/")
+	@ResponseBody
+	public String index() {
+		return "You made it!";
+	}
+
+	// Login form
+	@RequestMapping("/login.html")
+	public String login() {
+		return "login.html";
+	}
+
+	// Login form with error
+	@RequestMapping("/login-error.html")
+	public String loginError(Model model) {
+		model.addAttribute("loginError", true);
+		return "login.html";
+	}
 
 	//adds a user from JSON input and adds a self referencing Link for Hateoas
 	@PostMapping("/newuser")
+	@ResponseBody
 	public UserProfile addUserProfile(@RequestBody UserProfile user) {
 		dao.save(user);
 		String self = "/userID/"+user.getId();
@@ -41,6 +63,7 @@ public class UserController {
 
 	//returns a user with specific ID using path params
 	@GetMapping("/userID/{userId}")
+	@ResponseBody
 	public Optional<UserProfile> getUser(@PathVariable UUID userId) {
 		String self = "/userID/"+userId;
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
@@ -53,6 +76,7 @@ public class UserController {
 
 	//returns a user by id using query params
 	@GetMapping("/userbyid")
+	@ResponseBody
 	public Optional<UserProfile> getUser2(@RequestParam UUID userId) {
 		Optional<UserProfile> post = dao.findById(userId);
 		String self = "/userID/"+userId;
@@ -60,64 +84,6 @@ public class UserController {
 		dao.findById(userId).ifPresent(user->user.add(link));
 		return post;
 	}
-/*
-	//method to manage multiple query params WIP
-	@GetMapping("/userBy")
-	public List<Optional<UserProfile>> getUser4(@RequestParam(required = false) String uname,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String email,@RequestParam(required = false) String offset,@RequestParam(required = false) String limit) {
-
-		String base = "SELECT * FROM UserData.user_profile ";
-		String where2  ="WHERE ";
-
-
-		if(fname != null){
-			 where2 = where2 + "first_name = "+ "'" + fname + "'";
-
-		}
-		if(lname !=null){
-			if(where2.contains("first_name"))
-			{
-				where2=where2 +" AND ";
-			}
-			where2 = where2 + "last_name = "+ "'" +lname+ "'" ;
-		}
-		if(email !=null){
-			if(where2.contains("first_name") || where2.contains("last_name"))
-			{
-				where2=where2 +" AND ";
-			}
-			where2 = where2 + "email = "+"'" + email+ "'" ;
-		}
-		if(uname !=null){
-			if(where2.contains("first_name") || where2.contains("last_name") || where2.contains("email"))
-			{
-				where2=where2 +" AND ";
-			}
-			where2 = where2 + "user_name = "+ "'" + uname+ "'" ;
-		}
-
-		if (where2 != "WHERE "){
-			base = base + where2;
-
-		}
-
-		if(limit!= null && Integer.parseInt(limit)<10){
-
-				base = base + " LIMIT " + limit;
-
-		}
-		else{
-			base = base + " LIMIT " + 10;
-		}
-		if(offset!= null ){
-			base = base + " OFFSET "+ offset;
-		}
-		List<Optional<UserProfile>> userReturn = mysql_query3("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser",base);
-
-		System.out.println(base);
-		Optional<List<UserProfile>> post = dao.findByFirstName(fname);
-
-		return userReturn;
-	}**/
 
 	//implement pagination in a return all users
 	private final UserService userService;
@@ -125,6 +91,7 @@ public class UserController {
 	// Add links
 
 	@GetMapping("/usersBy")
+	@ResponseBody
 	public ResponseEntity<PagedModel<EntityModel<UserProfile>>>hateoasUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
 		if(limits!=null ){
 			userPage.setPageSize(Integer.parseInt(limits));
@@ -174,6 +141,7 @@ public class UserController {
 	//updates a users name given an id
 	//TODO - expand to all params excluding UUID
 	@PutMapping("/update")
+	@ResponseBody
 	public Optional<UserProfile> upUser(@RequestParam UUID userId,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String uname,@RequestParam(required = false) String email) {
 		Optional<UserProfile> post = dao.findById(userId);
 
