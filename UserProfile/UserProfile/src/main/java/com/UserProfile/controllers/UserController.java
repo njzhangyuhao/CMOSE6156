@@ -155,9 +155,9 @@ public class UserController {
 
 	//updates a users name given an id
 	//TODO - expand to all params excluding UUID
-	@PutMapping("/update")
+	@PutMapping("/update/{userId}")
 	@ResponseBody
-	public Optional<UserProfile> upUser(@RequestParam UUID userId,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String uname,@RequestParam(required = false) String email) {
+	public Optional<UserProfile> upUser(@PathVariable UUID userId,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String uname,@RequestParam(required = false) String email) {
 		Optional<UserProfile> post = dao.findById(userId);
 
 		if(fname!=null) {

@@ -25,6 +25,28 @@
           </config>
         </ContributedStateBase>
       </target>
+      <target name="ec2-user@ec2-3-89-31-224.compute-1.amazonaws.com:22" type="ssh/sftp" uuid="81029d4e-7209-43a0-915b-3fdeaf40dc40">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ec2-user/UserProfile" />
+          <option name="serverName" value="ec2-user@ec2-3-89-31-224.compute-1.amazonaws.com:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="javaVersionString" value="1.8.0_342" />
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="ec2-user@ec2-3-92-60-237.compute-1.amazonaws.com:22" type="ssh/sftp" uuid="df296d89-dd1c-41c6-b6b6-bc3b3287d4e8">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ec2-user/UserProfile" />
+          <option name="serverName" value="ec2-user@ec2-3-92-60-237.compute-1.amazonaws.com:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="javaVersionString" value="1.8.0_342" />
+          </config>
+        </ContributedStateBase>
+      </target>
     </targets>
   </component>
 </project>
