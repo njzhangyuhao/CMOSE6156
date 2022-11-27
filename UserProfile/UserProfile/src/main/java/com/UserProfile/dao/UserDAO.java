@@ -1,35 +1,30 @@
 package com.UserProfile.dao;
-import com.UserProfile.model.UserProfile;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.UserProfile.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.List;
 @Component
 @Transactional
-public interface UserDAO extends PagingAndSortingRepository<UserProfile,UUID>{
+public interface UserDAO extends PagingAndSortingRepository<User,UUID>{
 
 
 
-   Optional<UserProfile> findById(UUID id);
-    Optional<List<UserProfile>> findByFirstName(String firstName);
-    Optional<UserProfile> findByLastName(String lastName);
-    Optional<UserProfile> findByUserName(String userName);
-    Optional<UserProfile> findByEmail(String email);
+   Optional<User> findById(UUID id);
+    Optional<List<User>> findByFirstName(String firstName);
+    Optional<User> findByLastName(String lastName);
+    Optional<User> findByUserName(String userName);
+    Optional<User> findByEmail(String email);
 
-    UserProfile save(UserProfile userProfile);
+    User save(User userProfile);
 
 
-    Page<UserProfile> findAll ( Pageable pageable);
+    Page<User> findAll (Pageable pageable);
 
 
 

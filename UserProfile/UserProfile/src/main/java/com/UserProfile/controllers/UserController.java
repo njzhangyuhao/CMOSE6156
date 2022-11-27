@@ -1,7 +1,7 @@
 package com.UserProfile.controllers;
 import com.UserProfile.dao.UserDAO;
 import com.UserProfile.model.UserPage;
-import com.UserProfile.model.UserProfile;
+import com.UserProfile.model.User;
 import com.UserProfile.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.*;
@@ -14,11 +14,8 @@ import org.springframework.security.oauth2.core.user.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.hateoas.*;
 
-import javax.persistence.criteria.*;
 import java.sql.*;
 import java.util.*;
 
@@ -68,7 +65,7 @@ public class UserController {
 	//adds a user from JSON input and adds a self referencing Link for Hateoas
 	@PostMapping("/newuser")
 	@ResponseBody
-	public UserProfile addUserProfile(@RequestBody UserProfile user) {
+	public User addUserProfile(@RequestBody User user) {
 		dao.save(user);
 		String self = "/userID/"+user.getId();
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("self");
@@ -79,10 +76,10 @@ public class UserController {
 	//returns a user with specific ID using path params
 	@GetMapping("/userID/{userId}")
 	@ResponseBody
-	public Optional<UserProfile> getUser(@PathVariable UUID userId) {
+	public Optional<User> getUser(@PathVariable UUID userId) {
 		String self = "/userID/"+userId;
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
-		Optional<UserProfile> uid = dao.findById(userId);
+		Optional<User> uid = dao.findById(userId);
 		dao.findById(userId).ifPresent(user->user.add(link));
 		System.out.println(uid);
 		System.out.println(uid.getClass());
@@ -92,8 +89,8 @@ public class UserController {
 	//returns a user by id using query params
 	@GetMapping("/userbyid")
 	@ResponseBody
-	public Optional<UserProfile> getUser2(@RequestParam UUID userId) {
-		Optional<UserProfile> post = dao.findById(userId);
+	public Optional<User> getUser2(@RequestParam UUID userId) {
+		Optional<User> post = dao.findById(userId);
 		String self = "/userID/"+userId;
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("self");
 		dao.findById(userId).ifPresent(user->user.add(link));
@@ -107,7 +104,7 @@ public class UserController {
 
 	@GetMapping("/usersBy")
 	@ResponseBody
-	public ResponseEntity<PagedModel<EntityModel<UserProfile>>>hateoasUsers(UserPage userPage,@RequestParam (required = false) String limits,@RequestParam (required = false) String offset){
+	public ResponseEntity<PagedModel<EntityModel<User>>>hateoasUsers(UserPage userPage, @RequestParam (required = false) String limits, @RequestParam (required = false) String offset){
 		if(limits!=null ){
 			userPage.setPageSize(Integer.parseInt(limits));
 		}
@@ -131,16 +128,16 @@ public class UserController {
 		System.out.println(link2);
 		System.out.println(link3);
 
-		Page<UserProfile> page1 = userService.getUsers(userPage);
+		Page<User> page1 = userService.getUsers(userPage);
 
 
-		for(UserProfile x: page1){
+		for(User x: page1){
 			String userMethod ="userbyid?userId="+x.getId();
 			x.add(WebMvcLinkBuilder.linkTo(UserController.class).slash(userMethod).withRel("SELF"));
 		}
 
-		PagedResourcesAssembler<UserProfile> pagedResourcesAssembler = new PagedResourcesAssembler<UserProfile>(null,null);
-		PagedModel<EntityModel<UserProfile>> coll = pagedResourcesAssembler.toModel(page1,link);
+		PagedResourcesAssembler<User> pagedResourcesAssembler = new PagedResourcesAssembler<User>(null,null);
+		PagedModel<EntityModel<User>> coll = pagedResourcesAssembler.toModel(page1,link);
 		System.out.println(coll);
 
 
@@ -157,8 +154,8 @@ public class UserController {
 	//TODO - expand to all params excluding UUID
 	@PutMapping("/update/{userId}")
 	@ResponseBody
-	public Optional<UserProfile> upUser(@PathVariable UUID userId,@RequestParam(required = false) String fname,@RequestParam(required = false) String lname,@RequestParam(required = false) String uname,@RequestParam(required = false) String email) {
-		Optional<UserProfile> post = dao.findById(userId);
+	public Optional<User> upUser(@PathVariable UUID userId, @RequestParam(required = false) String fname, @RequestParam(required = false) String lname, @RequestParam(required = false) String uname, @RequestParam(required = false) String email) {
+		Optional<User> post = dao.findById(userId);
 
 		if(fname!=null) {
 			post.ifPresent(posts -> posts.setFirstName(fname));

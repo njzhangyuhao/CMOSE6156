@@ -7,7 +7,6 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.function.*;
 
 import org.springframework.hateoas.*;
 
@@ -15,7 +14,7 @@ import org.springframework.hateoas.*;
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserProfile extends RepresentationModel<UserProfile>  {
+public class User extends RepresentationModel<User>  {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -36,14 +35,14 @@ public class UserProfile extends RepresentationModel<UserProfile>  {
     public String getFirstName() {
         return this.firstName;
     }
-    public UserProfile(String userName, String email,String firstName, String lastName) {
+    public User(String userName, String email, String firstName, String lastName) {
         this.userName = userName;
         this.email = email;
         this.firstName = firstName;
         this.lastName= lastName;
     }
 
-    public UserProfile() {
+    public User() {
 
     }
 
