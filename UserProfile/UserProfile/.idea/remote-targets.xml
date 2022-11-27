@@ -14,6 +14,17 @@
           </config>
         </ContributedStateBase>
       </target>
+      <target name="ec2-user@ec2-44-202-43-111.compute-1.amazonaws.com:22" type="ssh/sftp" uuid="0b0b36de-0d66-4d1d-8ec5-b6be7a21e37c">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ec2-user/UserProfile" />
+          <option name="serverName" value="ec2-user@ec2-44-202-43-111.compute-1.amazonaws.com:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="javaVersionString" value="1.8.0_342" />
+          </config>
+        </ContributedStateBase>
+      </target>
     </targets>
   </component>
 </project>

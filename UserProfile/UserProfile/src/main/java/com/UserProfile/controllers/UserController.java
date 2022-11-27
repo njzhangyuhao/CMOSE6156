@@ -22,6 +22,9 @@ import javax.persistence.criteria.*;
 import java.sql.*;
 import java.util.*;
 
+//References for Oath2
+//http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/
+//https://dzone.com/articles/add-login-to-your-spring-boot-app-in-10-mins  reference for the login and HTML scaffolding
 
 //@RestController
 @Controller
