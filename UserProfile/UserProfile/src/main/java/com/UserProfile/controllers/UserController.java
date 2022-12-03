@@ -35,10 +35,12 @@ public class UserController {
 
 		this.userService = userService;
 	}
+	@CrossOrigin
 	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
+	@CrossOrigin
 	@RequestMapping("/securedPage")
 	public String securedPage(Model model,
 							  @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
@@ -50,12 +52,14 @@ public class UserController {
 	}
 
 	// Login form
+	@CrossOrigin
 	@RequestMapping("/login.html")
 	public String login() {
 		return "login.html";
 	}
 
 	// Login form with error
+	@CrossOrigin
 	@RequestMapping("/login-error.html")
 	public String loginError(Model model) {
 		model.addAttribute("loginError", true);
@@ -63,6 +67,7 @@ public class UserController {
 	}
 
 	//adds a user from JSON input and adds a self referencing Link for Hateoas
+	@CrossOrigin
 	@PostMapping("/newuser")
 	@ResponseBody
 	public User addUserProfile(@RequestBody User user) {
@@ -74,6 +79,7 @@ public class UserController {
 	}
 
 	//returns a user with specific ID using path params
+	@CrossOrigin
 	@GetMapping("/userID/{userId}")
 	@ResponseBody
 	public Optional<User> getUser(@PathVariable UUID userId) {
@@ -87,6 +93,7 @@ public class UserController {
 	}
 
 	//returns a user by id using query params
+	@CrossOrigin
 	@GetMapping("/userbyid")
 	@ResponseBody
 	public Optional<User> getUser2(@RequestParam UUID userId) {
@@ -102,6 +109,7 @@ public class UserController {
 
 	// Add links
 
+	@CrossOrigin
 	@GetMapping("/usersBy")
 	@ResponseBody
 	public ResponseEntity<PagedModel<EntityModel<User>>>hateoasUsers(UserPage userPage, @RequestParam (required = false) String limits, @RequestParam (required = false) String offset){
@@ -152,6 +160,7 @@ public class UserController {
 
 	//updates a users name given an id
 	//TODO - expand to all params excluding UUID
+	@CrossOrigin
 	@PutMapping("/update/{userId}")
 	@ResponseBody
 	public Optional<User> upUser(@PathVariable UUID userId, @RequestParam(required = false) String fname, @RequestParam(required = false) String lname, @RequestParam(required = false) String uname, @RequestParam(required = false) String email) {
@@ -186,6 +195,7 @@ public class UserController {
 	}
 
 	//Delete by ID
+	@CrossOrigin
 	@DeleteMapping ("/delete/{someID}")
 	public @ResponseBody String getname4(@PathVariable(value="someID") String id) {
 
