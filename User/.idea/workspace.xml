@@ -2,11 +2,89 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="265f0253-2674-4eac-baa5-bbaeca2a2fb9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/UserProfile/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/UserProfile/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/UserProfile/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/UserProfile/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/remote-targets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/UserProfile/.idea/remote-targets.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/dependencies-accessors/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/dependencies-accessors/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/fileChanges/last-build.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/fileChanges/last-build.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.4/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.4/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/dependencies-accessors/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/dependencies-accessors/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/fileChanges/last-build.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/fileChanges/last-build.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/7.5.1/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/7.5.1/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.gradle/vcs-1/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/artifacts/UserProfile_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/artifacts/UserProfile_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/jpa-buddy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/remote-targets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/remote-targets.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/User/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/bootJarMainClassName" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/bootJarMainClassName" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/classes/java/main/com/User/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/classes/java/main/com/User/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/classes/java/main/com/User/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/classes/java/main/com/User/SecurityConfiguration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/classes/java/main/com/User/controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/classes/java/main/com/User/controllers/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/classes/java/main/com/User/dao/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/classes/java/main/com/User/dao/UserDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/classes/java/main/com/User/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/classes/java/main/com/User/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/classes/java/main/com/User/model/UserPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/classes/java/main/com/User/model/UserPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/classes/java/main/com/User/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/classes/java/main/com/User/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/libs/UserProfile-1.0-SNAPSHOT-plain.jar" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/libs/UserProfile-1.0-SNAPSHOT-plain.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/libs/UserProfile-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/libs/UserProfile-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/resources/main/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/resources/main/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/resources/main/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/resources/main/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/resources/main/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/resources/main/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/resources/main/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/resources/main/templates/securedPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/resources/main/templates/securedPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/tmp/bootJar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/tmp/bootJar/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/User/build/tmp/jar/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/User/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/User/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/User/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/out/artifacts/UserProfile_jar/UserProfile.jar" beforeDir="false" afterPath="$PROJECT_DIR$/User/out/artifacts/UserProfile_jar/UserProfile.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/out/production/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/User/out/production/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/out/production/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/out/production/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/User/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/java/com/User/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/com/User/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/java/com/User/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/com/User/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/java/com/User/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/com/User/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/java/com/User/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/com/User/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/java/com/User/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/com/User/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/java/com/User/model/UserPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/com/User/model/UserPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/java/com/User/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/com/User/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserProfile/src/main/resources/templates/securedPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/resources/templates/securedPage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,18 +103,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kearn/Desktop/New folder/CMOSE6156/UserProfile&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/kearn/Desktop/New folder/CMOSE6156/User/User",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "advanced.settings"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -49,6 +127,8 @@
       <workItem from="1665886380840" duration="250000" />
       <workItem from="1669472851626" duration="255000" />
       <workItem from="1669553573505" duration="20000" />
+      <workItem from="1670512515236" duration="112000" />
+      <workItem from="1670512638845" duration="29000" />
     </task>
     <servers />
   </component>

@@ -26,7 +26,7 @@ public class compController {
 
     @GetMapping("/")
     public String base(){
-        return "Hello Users";
+        return "Hello Five Lions Users ";
     }
 
     @GetMapping("/call")
@@ -56,13 +56,13 @@ public class compController {
         String email = result.getEmail();
 
         //look up  profile by email to get id
-        String uri2 =  "https://rg1c42iplb.execute-api.us-east-1.amazonaws.com/ProfileService-API-prod/v1/userprofile/findByEmail/" + email;
+        String uri2 =  "https://http://five-lions-e6156.com/v1/userprofile/findByEmail/" + email;
         RestTemplate restTemplate2 =new RestTemplate();
         UserProfile result2 = restTemplate2.getForObject(uri2, UserProfile.class);
         UUID idOfProfile = result2.getId();
 
         //  delete profile by id
-        String uri3 =  "https://rg1c42iplb.execute-api.us-east-1.amazonaws.com/ProfileService-API-prod/v1/userprofile/deleteById" + idOfProfile;
+        String uri3 =  "https://http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile/deleteById" + idOfProfile;
         RestTemplate restTemplate3 =new RestTemplate();
         restTemplate3.delete(uri2);
 
@@ -82,14 +82,14 @@ public class compController {
     @ResponseBody
     public Optional<User> upUser(@PathVariable UUID id,  @RequestParam(required = false) String uname, @RequestParam(required = false) String email) {
         // look up user profile
-        String uri2 =  "https://rg1c42iplb.execute-api.us-east-1.amazonaws.com/ProfileService-API-prod/v1/userprofile/findByUserId/" + id;
+        String uri2 =  "http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile/findByUserId/" + id;
         RestTemplate restTemplate2 =new RestTemplate();
         UserProfile result2 = restTemplate2.getForObject(uri2, UserProfile.class);
         UUID idOfProfile = result2.getId();
 
 
         // update user Profile
-        String uri3 =  "https://rg1c42iplb.execute-api.us-east-1.amazonaws.com/ProfileService-API-prod/v1/userprofile/updateById/" + idOfProfile;
+        String uri3 =  "http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile/updateById/" + idOfProfile;
         RestTemplate restTemplate3 =new RestTemplate();
         restTemplate3.put(uri3, UserProfile.class);
 
@@ -116,7 +116,7 @@ public class compController {
         HttpEntity<User> request = new HttpEntity<>(new User(user.getUserName(), user.getEmail(), user.getFirstName(), user.getLastName()));
         User foo = restTemplate.postForObject(uri5, request, User.class);
 
-        String uri6 = "https://rg1c42iplb.execute-api.us-east-1.amazonaws.com/ProfileService-API-prod/v1/userprofile";
+        String uri6 = "http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile";
         RestTemplate restTemplate2 = new RestTemplate();
         HttpEntity<UserProfile> request2 = new HttpEntity<>(new UserProfile(user.getUserName(), user.getEmail()));
         UserProfile foo2 = restTemplate2.postForObject(uri6, request2, UserProfile.class);
@@ -130,7 +130,7 @@ public class compController {
         DynamoDbClient dynamoDB = DynamoDbClient.builder()
                 .region(Region.US_EAST_1)
                 .credentialsProvider(StaticCredentialsProvider.create(
-                AwsBasicCredentials.create("AKIA5Q5ELAI4B3SBARGL", "J2EkNtCShmYJQD/3ULbP4OCPeCZznVHkS4Xk7Bmw")))
+                AwsBasicCredentials.create(System.getenv("ACCESS_KEY"), System.getenv("SECRET_KEY"))))
                 .build();
         Map<String, AttributeValue> rel =  new HashMap<>();
         rel.put("celebrity",AttributeValue.fromS(celeb.toString()));
