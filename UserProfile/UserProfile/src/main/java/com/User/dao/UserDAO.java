@@ -1,5 +1,5 @@
-package com.UserProfile.dao;
-import com.UserProfile.model.User;
+package com.User.dao;
+import com.User.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -15,7 +15,7 @@ public interface UserDAO extends PagingAndSortingRepository<User,UUID>{
 
 
 
-   Optional<User> findById(UUID id);
+    Optional<User> findById(UUID id);
     Optional<List<User>> findByFirstName(String firstName);
     Optional<User> findByLastName(String lastName);
     Optional<User> findByUserName(String userName);

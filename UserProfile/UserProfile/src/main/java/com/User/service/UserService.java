@@ -1,13 +1,14 @@
-package com.UserProfile.service;
+package com.User.service;
 
 
-import com.UserProfile.dao.UserDAO;
-import com.UserProfile.model.UserPage;
-import com.UserProfile.model.User;
+import com.User.dao.UserDAO;
+import com.User.model.UserPage;
+import com.User.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserService {
@@ -20,6 +21,7 @@ public class UserService {
 
     public Page<User> getUsers(UserPage userPage){
         Pageable pageable = PageRequest.of(userPage.getPageNumber(),userPage.getPageSize());
+
         return dao.findAll(pageable);
 
     }

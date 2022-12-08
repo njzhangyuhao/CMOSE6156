@@ -1,4 +1,4 @@
-package com.UserProfile.model;
+package com.User.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

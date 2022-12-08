@@ -1,4 +1,4 @@
-package com.UserProfile.model;
+package com.User.model;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.*;

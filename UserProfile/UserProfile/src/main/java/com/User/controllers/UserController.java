@@ -1,12 +1,13 @@
-package com.UserProfile.controllers;
-import com.UserProfile.dao.UserDAO;
-import com.UserProfile.model.UserPage;
-import com.UserProfile.model.User;
-import com.UserProfile.service.UserService;
+package com.User.controllers;
+import com.User.dao.UserDAO;
+import com.User.model.UserPage;
+import com.User.model.User;
+import com.User.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.*;
 import org.springframework.hateoas.server.mvc.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.oauth2.client.*;
 import org.springframework.security.oauth2.client.annotation.*;
@@ -22,6 +23,8 @@ import java.util.*;
 //References for Oath2
 //http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/
 //https://dzone.com/articles/add-login-to-your-spring-boot-app-in-10-mins  reference for the login and HTML scaffolding
+//https://spring.io/guides/tutorials/spring-boot-oauth2/
+
 
 //@RestController
 @Controller
@@ -35,12 +38,13 @@ public class UserController {
 
 		this.userService = userService;
 	}
-	@CrossOrigin
+	//@CrossOrigin
 	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
-	@CrossOrigin
+
+	//@CrossOrigin
 	@RequestMapping("/securedPage")
 	public String securedPage(Model model,
 							  @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
@@ -52,14 +56,14 @@ public class UserController {
 	}
 
 	// Login form
-	@CrossOrigin
+	//@CrossOrigin
 	@RequestMapping("/login.html")
 	public String login() {
 		return "login.html";
 	}
 
 	// Login form with error
-	@CrossOrigin
+	//@CrossOrigin
 	@RequestMapping("/login-error.html")
 	public String loginError(Model model) {
 		model.addAttribute("loginError", true);
@@ -67,7 +71,8 @@ public class UserController {
 	}
 
 	//adds a user from JSON input and adds a self referencing Link for Hateoas
-	@CrossOrigin
+	//@CrossOrigin
+	//@PreAuthorize("#oauth2.hasScope('write')")
 	@PostMapping("/newuser")
 	@ResponseBody
 	public User addUserProfile(@RequestBody User user) {
@@ -78,14 +83,23 @@ public class UserController {
 		return user;
 	}
 
+	@PostMapping("/follow/{celeb}/{follower}")
+	@ResponseBody
+	public String followUser(@PathVariable UUID celeb,@PathVariable UUID follower) {
+		return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","INSERT INTO UserData.followers(celebrity, follower) VALUES ('"+celeb+", "+follower+"')" ));
+	}
+
 	//returns a user with specific ID using path params
-	@CrossOrigin
+	//@CrossOrigin
+	//@PreAuthorize("#oauth2.hasScope('read')")
 	@GetMapping("/userID/{userId}")
 	@ResponseBody
 	public Optional<User> getUser(@PathVariable UUID userId) {
 		String self = "/userID/"+userId;
+		System.out.println(userId.getClass());
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
 		Optional<User> uid = dao.findById(userId);
+		System.out.println(uid);
 		dao.findById(userId).ifPresent(user->user.add(link));
 		System.out.println(uid);
 		System.out.println(uid.getClass());
@@ -93,7 +107,8 @@ public class UserController {
 	}
 
 	//returns a user by id using query params
-	@CrossOrigin
+	//@CrossOrigin
+	//@PreAuthorize("#oauth2.hasScope('read')")
 	@GetMapping("/userbyid")
 	@ResponseBody
 	public Optional<User> getUser2(@RequestParam UUID userId) {
@@ -109,7 +124,8 @@ public class UserController {
 
 	// Add links
 
-	@CrossOrigin
+	//@CrossOrigin
+	//@PreAuthorize("#oauth2.hasScope('read')")
 	@GetMapping("/usersBy")
 	@ResponseBody
 	public ResponseEntity<PagedModel<EntityModel<User>>>hateoasUsers(UserPage userPage, @RequestParam (required = false) String limits, @RequestParam (required = false) String offset){
@@ -160,7 +176,8 @@ public class UserController {
 
 	//updates a users name given an id
 	//TODO - expand to all params excluding UUID
-	@CrossOrigin
+	//@CrossOrigin
+	//@PreAuthorize("#oauth2.hasScope('write')")
 	@PutMapping("/update/{userId}")
 	@ResponseBody
 	public Optional<User> upUser(@PathVariable UUID userId, @RequestParam(required = false) String fname, @RequestParam(required = false) String lname, @RequestParam(required = false) String uname, @RequestParam(required = false) String email) {
@@ -195,7 +212,8 @@ public class UserController {
 	}
 
 	//Delete by ID
-	@CrossOrigin
+	//@CrossOrigin
+	//@PreAuthorize("#oauth2.hasScope('write')")
 	@DeleteMapping ("/delete/{someID}")
 	public @ResponseBody String getname4(@PathVariable(value="someID") String id) {
 
