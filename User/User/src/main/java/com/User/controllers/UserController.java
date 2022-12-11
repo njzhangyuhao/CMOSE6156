@@ -80,7 +80,7 @@ public class UserController {
 		String self = "/userID/"+user.getId();
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("self");
 		user.add(link);
-		String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","INSERT INTO UserData.loginData(id,gitHubID) VALUES ('"+user.getId()+", "+oauth2User.getName()+"')" ));
+		String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","INSERT INTO UserData.loginData(id,gitHubID) VALUES ('"+user.getId()+"', "+oauth2User.getName()+")" ));
 		return user;
 	}
 
