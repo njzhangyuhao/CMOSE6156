@@ -14,10 +14,7 @@ import sun.net.www.http.HttpClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 
@@ -42,6 +39,26 @@ public class compController {
         System.out.println(result2);
         return result2 + result;
     }
+
+    @GetMapping("/email")
+    public String emailCall(@RequestParam String email){
+        String uri = "https://emailvalidation.abstractapi.com/v1/?api_key=e4f5ed481a644b6f81576fe9ac6dd367&email="+email;
+       RestTemplate restTemplate=new RestTemplate();
+       String result = restTemplate.getForObject(uri, String.class);
+       System.out.println(result);
+       String[] temp = result.split(",");
+       System.out.println(temp[2]);
+        System.out.println(temp[2].length());
+        String check = "\"deliverability\":\"DELIVERABLE\"";
+        System.out.println(check.length());
+        System.out.println("\"deliverability\":\"DELIVERABLE\"");
+        if(temp[2].equals("\"deliverability\":\"DELIVERABLE\""))
+        {
+            System.out.println("THE same");
+        }
+        return  "stop";
+    }
+
 
 
 
@@ -114,6 +131,7 @@ public class compController {
         String uri5 = "https://o8ngqn1quk.execute-api.us-east-1.amazonaws.com/Temp/newuser";
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<User> request = new HttpEntity<>(new User(user.getUserName(), user.getEmail(), user.getFirstName(), user.getLastName()));
+
         User foo = restTemplate.postForObject(uri5, request, User.class);
 
         String uri6 = "http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile";

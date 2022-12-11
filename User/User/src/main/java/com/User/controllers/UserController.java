@@ -75,11 +75,12 @@ public class UserController {
 	//@PreAuthorize("#oauth2.hasScope('write')")
 	@PostMapping("/newuser")
 	@ResponseBody
-	public User addUserProfile(@RequestBody User user) {
+	public User addUserProfile(@RequestBody User user, @AuthenticationPrincipal OAuth2User oauth2User) {
 		dao.save(user);
 		String self = "/userID/"+user.getId();
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("self");
 		user.add(link);
+		String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","INSERT INTO UserData.loginData(id,gitHubID) VALUES ('"+user.getId()+", "+oauth2User.getName()+"')" ));
 		return user;
 	}
 
@@ -89,12 +90,18 @@ public class UserController {
 		return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","INSERT INTO UserData.followers(celebrity, follower) VALUES ('"+celeb+", "+follower+"')" ));
 	}
 
+	@GetMapping("/myID")
+	@ResponseBody
+	public String getID(@AuthenticationPrincipal OAuth2User oAuth2User){
+		return String.format(mysql_query("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","SELECT id FROM UserData.loginData WHERE gitHubID = "+oAuth2User.getName() ));
+	}
+
 	//returns a user with specific ID using path params
 	//@CrossOrigin
 	//@PreAuthorize("#oauth2.hasScope('read')")
 	@GetMapping("/userID/{userId}")
 	@ResponseBody
-	public Optional<User> getUser(@PathVariable UUID userId) {
+	public Optional<User> getUser(@PathVariable UUID userId, @AuthenticationPrincipal OAuth2User oauth2User) {
 		String self = "/userID/"+userId;
 		System.out.println(userId.getClass());
 		Link link = WebMvcLinkBuilder.linkTo(UserController.class).slash(self).withRel("SELF");
@@ -103,6 +110,7 @@ public class UserController {
 		dao.findById(userId).ifPresent(user->user.add(link));
 		System.out.println(uid);
 		System.out.println(uid.getClass());
+		System.out.println(oauth2User.getName());
 		return uid;
 	}
 
@@ -279,7 +287,7 @@ public class UserController {
 		return"data inserted Successfully";
 	}**/
 
-/*
+
 	public String mysql_query(String  DB_URL, String USER, String PASS,String QUERY) {
 
 		System.out.println(QUERY);
@@ -297,19 +305,20 @@ public class UserController {
 			while (rs.next()) {
 				// Retrieve by column name
 
-				result = ("email: " + rs.getString("email"));
-				result = result + " " + ("User_Name: " + rs.getString("User_Name"));
-				result = result + " " + ("First_Name: " + rs.getString("first_name"));
-				result = result + " " + ("Last_Name: " + rs.getString("last_name"));
-				System.out.println(result);
-				finalresult=finalresult+result;
+				//result = ("email: " + rs.getString("email"));
+				//result = result + " " + ("User_Name: " + rs.getString("User_Name"));
+				//result = result + " " + ("First_Name: " + rs.getString("first_name"));
+				//result = result + " " + ("Last_Name: " + rs.getString("last_name"));
+				//System.out.println(result);
+				//finalresult=finalresult+result;
+				finalresult=rs.getString("id");
 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return finalresult;
-	}**/
+	}
 
 	public String mysql_query2(String  DB_URL, String USER, String PASS,String QUERY) {
 
