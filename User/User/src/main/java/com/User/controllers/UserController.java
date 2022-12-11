@@ -27,6 +27,7 @@ import java.util.*;
 
 
 //@RestController
+@CrossOrigin
 @Controller
 public class UserController {
 	private final UserDAO dao;
