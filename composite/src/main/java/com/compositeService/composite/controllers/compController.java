@@ -26,22 +26,30 @@ public class compController {
         return "Hello Five Lions Users ";
     }
 
-    @GetMapping("/call")
-    public String call(){
-        String uri = "http://five-lions-e6156.com/v1/post/62ff0f09-a659-437a-bb34-2ea58ab1ca83";
+    @GetMapping("/infoID/{id}")
+    public String call(@PathVariable UUID id){
+      /*      String uri = "http://five-lions-e6156.com/api/v1/userprofile/findByUserId/"+id;
         RestTemplate restTemplate=new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
         System.out.println(result);
-
-        String uri2 = "https://five-lions-e6156.com/v1/userprofile/findById/dff9";
+        return result;
+**/
+        String uri2 = "http://34.227.158.8:3310/userID/"+id;
         RestTemplate restTemplate2=new RestTemplate();
         String result2 = restTemplate2.getForObject(uri2, String.class);
         System.out.println(result2);
-        return result2 + result;
+
+        String uri3 = String.format(mysql_query("jdbc:mysql://awseb-e-jxphsepgxj-stack-awsebrdsdatabase-j9bvajj7xfxd.c0opdlelqqgp.us-east-1.rds.amazonaws.com:3306/ebdb?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false","dbuser","e6156$coms$p3","SELECT * FROM ebdb.post WHERE user_id = '" + id +"'"));
+        System.out.println(uri3);
+
+
+        return result2 + uri3;
+
+
     }
 
-    @GetMapping("/email")
-    public String emailCall(@RequestParam String email){
+    @PutMapping("/emailUpdate/{id}")
+    public String emailCall(@RequestParam String email,@PathVariable UUID id){
         String uri = "https://emailvalidation.abstractapi.com/v1/?api_key=e4f5ed481a644b6f81576fe9ac6dd367&email="+email;
        RestTemplate restTemplate=new RestTemplate();
        String result = restTemplate.getForObject(uri, String.class);
@@ -54,9 +62,18 @@ public class compController {
         System.out.println("\"deliverability\":\"DELIVERABLE\"");
         if(temp[2].equals("\"deliverability\":\"DELIVERABLE\""))
         {
-            System.out.println("THE same");
+            String uri2 = "http://34.227.158.8:3310/update/"+id+"?email="+email;
+            RestTemplate restTemplate2=new RestTemplate();
+            restTemplate2.put(uri2, String.class);
+
+            //String uri3 =  "https://five-lions-e6156.com/v1/userprofile/updateById/" +id+"?email="+email;
+            //RestTemplate restTemplate3=new RestTemplate();
+            //restTemplate3.put(uri3, String.class);
+
+            return "Thanks for the update, new email success";
+
         }
-        return  "stop";
+        return  "Your email is coming back invalid, please double check it";
     }
 
 
@@ -67,24 +84,24 @@ public class compController {
     public @ResponseBody String getname4(@PathVariable(value="someID") String id) throws MalformedURLException {
 
         //look up user to get email
-        String uri =  "https://o8ngqn1quk.execute-api.us-east-1.amazonaws.com/Temp/userID/" + id;
+        String uri =  "http://34.227.158.8:3310/userID/" + id;
         RestTemplate restTemplate=new RestTemplate();
         User result = restTemplate.getForObject(uri, User.class);
         String email = result.getEmail();
 
         //look up  profile by email to get id
-        String uri2 =  "https://http://five-lions-e6156.com/v1/userprofile/findByEmail/" + email;
+        String uri2 =  "http://five-lions-e6156.com/v1/userprofile/findByEmail/" + email;
         RestTemplate restTemplate2 =new RestTemplate();
         UserProfile result2 = restTemplate2.getForObject(uri2, UserProfile.class);
         UUID idOfProfile = result2.getId();
 
         //  delete profile by id
-        String uri3 =  "https://http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile/deleteById" + idOfProfile;
+        String uri3 =  "http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile/deleteById" + idOfProfile;
         RestTemplate restTemplate3 =new RestTemplate();
         restTemplate3.delete(uri2);
 
         //delete User by ID
-        String uri4 =  "https://o8ngqn1quk.execute-api.us-east-1.amazonaws.com/Temp/delete/" + id;
+        String uri4 =  "http://34.227.158.8:3310/delete/" + id;
         RestTemplate restTemplate4=new RestTemplate();
         restTemplate4.delete(uri4);
 
@@ -94,7 +111,7 @@ public class compController {
 
     }
 
-
+/*
     @PutMapping("/update/{id}")
     @ResponseBody
     public Optional<User> upUser(@PathVariable UUID id,  @RequestParam(required = false) String uname, @RequestParam(required = false) String email) {
@@ -112,7 +129,7 @@ public class compController {
 
 
         // update user
-        String uri4 =  "https://o8ngqn1quk.execute-api.us-east-1.amazonaws.com/update/"+id;
+        String uri4 =  "http://five-lions-e6156.com/update/"+id;
         RestTemplate restTemplate=new RestTemplate();
         restTemplate.put(uri4, User.class);
 
@@ -122,29 +139,30 @@ public class compController {
 
         restTemplate.exchange(uri4 +id, HttpMethod.PUT, entity, String.class).getBody();
 **/
-        return null;
+       // return null;
 
-    }
+   // }
 
     @PostMapping("/createUser")
-    public UserProfile addUserProfile(@RequestBody User user) {
-        String uri5 = "https://o8ngqn1quk.execute-api.us-east-1.amazonaws.com/Temp/newuser";
+    public User addUserProfile(@RequestBody User user) {
+        String uri5 = "http://34.227.158.8:3310/newuser";
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<User> request = new HttpEntity<>(new User(user.getUserName(), user.getEmail(), user.getFirstName(), user.getLastName()));
 
         User foo = restTemplate.postForObject(uri5, request, User.class);
-
+/*
         String uri6 = "http://five-lions-e6156.com/v1/post/09b8952e-c7dd-46d5-a20a-cdfa0a255b47/v1/userprofile";
         RestTemplate restTemplate2 = new RestTemplate();
         HttpEntity<UserProfile> request2 = new HttpEntity<>(new UserProfile(user.getUserName(), user.getEmail()));
         UserProfile foo2 = restTemplate2.postForObject(uri6, request2, UserProfile.class);
-
-        return foo2;
+**/
+        return foo;
     }
 
     @PostMapping("/follow/{celeb}/{follower}")
     @ResponseBody
     public String followUser(@PathVariable UUID celeb,@PathVariable UUID follower) {
+        System.out.println(System.getenv("ACCESS_KEY"));
         DynamoDbClient dynamoDB = DynamoDbClient.builder()
                 .region(Region.US_EAST_1)
                 .credentialsProvider(StaticCredentialsProvider.create(
@@ -162,6 +180,37 @@ public class compController {
         return String.format(mysql_query2("jdbc:mysql://users-e6156.cexqeqvqreq2.us-east-1.rds.amazonaws.com:3306/UserData?autoReconnect=true&useSSL=false","root","dbuserdbuser","INSERT INTO UserData.followers(celebrity, follower) VALUES ('"+celeb+"', '"+follower+"')" ));
     }
 
+    public String mysql_query(String  DB_URL, String USER, String PASS,String QUERY) {
+
+        System.out.println(QUERY);
+        String finalresult  ="";
+        String result = null;
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(QUERY);
+
+
+        ) {
+            // Extract data from result set
+
+            while (rs.next()) {
+                // Retrieve by column name
+
+                result = ("user_id: " + rs.getString("user_id"));
+                result = result + " " + ("image_id: " + rs.getString("image_id"));
+                result = result + " " + ("subject: " + rs.getString("subject"));
+                //result = result + " " + ("Last_Name: " + rs.getString("last_name"));
+                //System.out.println(result);
+                finalresult=finalresult+result;
+                //finalresult=rs.getString("user_id");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return finalresult;
+    }
 
 
     public String mysql_query2(String  DB_URL, String USER, String PASS,String QUERY) {
