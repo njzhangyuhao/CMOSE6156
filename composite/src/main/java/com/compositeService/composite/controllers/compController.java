@@ -90,7 +90,7 @@ public class compController {
             String request = "{\"email\":\""+email +"\"}";
             HttpEntity<String> entity = new HttpEntity<String>(request,headers);
             restTemplate4.put(uri4, entity);
-
+            /***/
             return "Thanks for the update, new email success";
 
         }
