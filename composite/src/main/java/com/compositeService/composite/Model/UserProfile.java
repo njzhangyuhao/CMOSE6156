@@ -35,6 +35,7 @@ public class UserProfile {
     public UserProfile(String userName, String email) {
         this.userName = userName;
         this.email = email;
+       // this.userId=userId;
         this.followedCount = 0;
         this.followerCount = 0;
     }
