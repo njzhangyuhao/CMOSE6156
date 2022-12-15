@@ -11,7 +11,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
-import sun.net.www.http.HttpClient;
+//import sun.net.www.http.HttpClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import java.net.MalformedURLException;
 import java.net.URL;
