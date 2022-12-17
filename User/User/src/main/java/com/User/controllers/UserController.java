@@ -128,16 +128,17 @@ public class UserController {
 		return post;
 	}
 
+
 	//implement pagination in a return all users
 	private final UserService userService;
 
-	// Add links
 
 	//@CrossOrigin
 	//@PreAuthorize("#oauth2.hasScope('read')")
 	@GetMapping("/usersBy")
 	@ResponseBody
-	public ResponseEntity<PagedModel<EntityModel<User>>>hateoasUsers(UserPage userPage, @RequestParam (required = false) String limits, @RequestParam (required = false) String offset){
+	public ResponseEntity<PagedModel<EntityModel<User>>>hateoasUsers
+	(UserPage userPage, @RequestParam (required = false) String limits, @RequestParam (required = false) String offset)	{
 		if(limits!=null ){
 			userPage.setPageSize(Integer.parseInt(limits));
 		}
@@ -166,7 +167,10 @@ public class UserController {
 
 		for(User x: page1){
 			String userMethod ="userbyid?userId="+x.getId();
-			x.add(WebMvcLinkBuilder.linkTo(UserController.class).slash(userMethod).withRel("SELF"));
+			//x.add(WebMvcLinkBuilder.linkTo(UserController.class).slash(userMethod).withRel("SELF"));
+			x.add(link);
+			x.add(link2);
+			x.add(link3);
 		}
 
 		PagedResourcesAssembler<User> pagedResourcesAssembler = new PagedResourcesAssembler<User>(null,null);
